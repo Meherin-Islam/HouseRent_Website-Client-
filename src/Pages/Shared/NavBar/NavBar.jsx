@@ -1,10 +1,25 @@
-import React from 'react';
+
+import { FaBuilding } from 'react-icons/fa';
+import { IoHome } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
+import pic from "../../../assets/logo.png";
 
 const NavBar = () => {
     return (
-        <div>
-            
-        </div>
+        <div className="mt-12 ml-14 flex gap-32 items-center">
+            <div className="flex nav space-x-10 text-2xl">
+                <img className='w-12' src={pic}/>
+                <h1 className='text-3xl'>Build Board</h1>
+                <Link to="/" className="flex gap-1 items-center">
+                <IoHome /> Home
+                </Link>
+               
+                <Link to="/my-profile" className="flex gap-1 items-center">
+                    <FaBuilding></FaBuilding> Apartment
+                </Link>
+                
+            </div>
+            </div>
     );
 };
 
