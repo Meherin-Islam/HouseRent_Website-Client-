@@ -31,7 +31,7 @@ const NavBar = () => {
           <IoHome /> Home
         </Link>
         <Link
-          to="/my-profile"
+          to="/apartment"
           className="flex gap-1 items-center hover:text-green-600"
         >
           <FaBuilding /> Apartment

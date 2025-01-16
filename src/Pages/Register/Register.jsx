@@ -4,6 +4,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AuthContext from "../../provider/AuthContext";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
     const { createUser } = useContext(AuthContext);
@@ -68,6 +69,9 @@ const Register = () => {
 
     return (
         <div className="hero bg-base-200 min-h-screen">
+             <Helmet>
+                            <title>Build Board:Register</title>
+                        </Helmet>
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                     <form onSubmit={handleRegister} className="card-body">

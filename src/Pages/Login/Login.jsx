@@ -3,6 +3,7 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../provider/AuthContext";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
     const { signInUser } = useContext(AuthContext);
@@ -39,6 +40,9 @@ const Login = () => {
 
     return (
         <div className="hero bg-base-200 min-h-screen">
+            <Helmet>
+                <title>Build Board:Login</title>
+            </Helmet>
             <div className="card bg-base-100 w-2/5 mx-auto">
                 <form onSubmit={handleSignIn} className="card-body">
                     <h1 className="text-5xl font-bold text-center mb-3">Sign In</h1>
