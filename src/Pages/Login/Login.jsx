@@ -2,13 +2,13 @@ import { useContext } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../provider/AuthContext";
 import SocialLogin from "../SocialLogin/SocialLogin";
-
+import Swal from "sweetalert2";
 
 const Login = () => {
     const { signInUser } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
-    const from = location.state || '/';
+    const from = location.state?.from || '/';
 
     const handleSignIn = (e) => {
         e.preventDefault();
@@ -18,9 +18,21 @@ const Login = () => {
 
         signInUser(email, password)
             .then((result) => {
-                navigate(from);
+                Swal.fire({
+                    title: "Success!",
+                    text: "Logged in successfully!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                });
+                navigate(from, { replace: true });
             })
             .catch((error) => {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Login failed. Please check your credentials.",
+                    icon: "error",
+                    confirmButtonText: "Try Again",
+                });
                 console.error("Sign In Error:", error.message);
             });
     };
@@ -58,7 +70,7 @@ const Login = () => {
                     </div>
 
                     <div className="form-control mt-6">
-                        <button className="btn bg-teal-500">Sign In</button>
+                        <button className="btn bg-amber-700">Sign In</button>
                     </div>
                 </form>
                 <div className="divider">OR</div>
@@ -67,7 +79,7 @@ const Login = () => {
                 {/* Add Registration Link */}
                 <p className="text-center mt-4">
                     New here?{" "}
-                    <Link to="/auth/register" className="text-teal-500 underline">
+                    <Link to="/register" className="text-teal-500 font-bold underline">
                         Click to register
                     </Link>
                 </p>

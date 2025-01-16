@@ -3,13 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"; 
 import AuthContext from "../../provider/AuthContext";
 import SocialLogin from "../SocialLogin/SocialLogin";
-
+import Swal from "sweetalert2";
 
 const Register = () => {
     const { createUser } = useContext(AuthContext);
     const [errors, setErrors] = useState([]);
     const [showPassword, setShowPassword] = useState(false); 
     const navigate = useNavigate(); 
+
     const handleRegister = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -40,12 +41,26 @@ const Register = () => {
         } else {
             setErrors([]);
             try {
-                
                 await createUser(email, password, photoUrl); 
-                
-                navigate('/');
+
+                Swal.fire({
+                    title: "Registration Successful!",
+                    text: "Welcome to Build Board!",
+                    icon: "success",
+                    confirmButtonText: "Continue",
+                }).then(() => {
+                    navigate('/');
+                });
             } catch (error) {
                 console.error("Error during registration:", error.message);
+
+                Swal.fire({
+                    title: "Registration Failed!",
+                    text: error.message,
+                    icon: "error",
+                    confirmButtonText: "Try Again",
+                });
+
                 setErrors([error.message]);
             }
         }
@@ -90,7 +105,7 @@ const Register = () => {
                             </label>
                             <div className="relative">
                                 <input
-                                    type={showPassword ? "text" : "password"} // Toggle between text and password type
+                                    type={showPassword ? "text" : "password"}
                                     name="password"
                                     placeholder="password"
                                     className="input input-bordered"
@@ -98,13 +113,13 @@ const Register = () => {
                                 />
                                 <button
                                     type="button"
-                                    onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
+                                    onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xl"
                                 >
                                     {showPassword ? (
-                                        <AiOutlineEyeInvisible /> // Eye invisible icon
+                                        <AiOutlineEyeInvisible />
                                     ) : (
-                                        <AiOutlineEye /> // Eye visible icon
+                                        <AiOutlineEye />
                                     )}
                                 </button>
                             </div>
@@ -119,14 +134,14 @@ const Register = () => {
                         )}
 
                         <div className="form-control mt-6">
-                            <button className="btn bg-teal-500">Register</button>
+                            <button className="btn bg-green-600">Register</button>
                         </div>
                     </form>
                     <div className="divider"> OR</div>
                     <SocialLogin />
                     <p className="text-center mt-4">
                         Already Have An Account?{" "}
-                        <Link to="/auth/login" className="text-teal-500 underline">
+                        <Link to="/login" className="text-green-600 underline font-bold">
                             Click to Sign In
                         </Link>
                     </p>
