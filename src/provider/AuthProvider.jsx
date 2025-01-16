@@ -5,7 +5,8 @@ import {
   onAuthStateChanged, 
   signInWithEmailAndPassword, 
   signInWithPopup, 
-  signOut 
+  signOut, 
+  updateProfile 
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config"; 
 import AuthContext from "./AuthContext";
@@ -16,35 +17,58 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const createUser = (email, password) => {
+  // Create a new user and update their profile with displayName and photoURL
+  const createUser = (email, password, displayName, photoURL) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        // After user is created, update their profile with displayName and photoURL
+        return updateProfile(user, {
+          displayName: displayName,
+          photoURL: photoURL,
+        });
+      });
   };
 
+  // Sign in user
   const signInUser = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  // Sign in with Google
   const signInWithGoogle = () => {
     setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
+  // Sign out user
   const signOutUser = () => {
     setLoading(true);
     return signOut(auth);
   };
 
+  // Track auth state and store user details
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      console.log("State Captured:", currentUser); // Debugging log
+      if (currentUser) {
+        setUser({
+          uid: currentUser.uid,
+          email: currentUser.email,
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+        });
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
-    return () => unsubscribe();
+
+    return () => unsubscribe(); // Cleanup the subscription when the component unmounts
   }, []);
 
+  // Provide auth information to the rest of the app
   const authInfo = {
     user,
     loading,

@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 
 const Login = () => {
-    const { signInUser } = useContext(AuthContext);
+    const { signInUser, user } = useContext(AuthContext); // Access user from context
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from || '/';
@@ -88,6 +88,14 @@ const Login = () => {
                     </Link>
                 </p>
             </div>
+
+            {/* Display User Info After Login */}
+            {user && (
+                <div className="user-profile">
+                    <h2>Welcome, {user.displayName}</h2>
+                    <img src={user.photoURL} alt="User Profile" />
+                </div>
+            )}
         </div>
     );
 };
