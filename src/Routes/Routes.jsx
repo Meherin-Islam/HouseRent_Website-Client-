@@ -12,6 +12,8 @@ import Dashboard from "../LayOut/Dashboard";
 import MyProfile from "../Pages/DashBoard/MyProfile";
 import Announcements from "../Pages/DashBoard/Announcements";
 import ManageMembers from "../Pages/DashBoard/ManageMembers";
+import MakeAnnouncement from "../Pages/DashBoard/MakeAnnouncement";
+import AgreementRequest from "../Pages/DashBoard/AgreementRequest";
 
 
 
@@ -50,9 +52,19 @@ import ManageMembers from "../Pages/DashBoard/ManageMembers";
             path:'announcements',
             element:<Announcements></Announcements>
           },
+          //admin routes
           {
             path: 'manage-members',
             element: <ManageMembers></ManageMembers>
+          },
+          {
+            path:'make-announcement',
+            element:<MakeAnnouncement></MakeAnnouncement>
+          },
+          {
+            path:'agreement-requests',
+            element:<AgreementRequest></AgreementRequest>
+
           }
         ]
       }

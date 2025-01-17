@@ -24,7 +24,7 @@ const MakeAnnouncement = () => {
 
             const data = await response.json();
 
-            if (data.insertedId) {
+            if (data.announcementId) {
                 Swal.fire({
                     title: "Success!",
                     text: "Announcement created successfully!",
