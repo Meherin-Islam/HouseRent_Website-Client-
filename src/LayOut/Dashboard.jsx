@@ -1,12 +1,13 @@
 import {  FaHome, FaUser,   } from "react-icons/fa";
 import { MdAnnouncement } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
 
 
 
 const Dashboard = () => {
     
-
+    const [isAdmin] = useAdmin();
     
     return (
         <div className="flex">

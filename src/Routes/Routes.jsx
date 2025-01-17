@@ -10,6 +10,7 @@ import Apartment from "../Pages/Apartment/Apartment";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../LayOut/Dashboard";
 import MyProfile from "../Pages/DashBoard/MyProfile";
+import Announcements from "../Pages/DashBoard/Announcements";
 
 
 
@@ -43,6 +44,10 @@ import MyProfile from "../Pages/DashBoard/MyProfile";
           {
             path: 'profile',
             element: <MyProfile></MyProfile>
+          },
+          {
+            path:'announcements',
+            element:<Announcements></Announcements>
           }
         ]
       }
