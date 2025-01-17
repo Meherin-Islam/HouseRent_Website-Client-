@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { toast } from "react-toastify"; // Make sure you have react-toastify installed
+import Swal from 'sweetalert2'; 
 
 const Apartment = () => {
   const [user, setUser] = useState(null);
@@ -9,9 +9,6 @@ const Apartment = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [rentRange, setRentRange] = useState({ min: "", max: "" });
-  const [showAgreementModal, setShowAgreementModal] = useState(false);
-  const [selectedApartment, setSelectedApartment] = useState(null);
-  const [agreedApartments, setAgreedApartments] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const itemsPerPage = 6;
@@ -62,30 +59,15 @@ const Apartment = () => {
   };
 
   const handleAgreementClick = (apartment) => {
-    if (agreedApartments[apartment.apartmentNo]) {
-      toast.error("You can only apply for one agreement.");
-      return;
-    }
-
-    setSelectedApartment(apartment);
-    setShowAgreementModal(true);
-  };
-
-  const confirmAgreement = async () => {
-    if (!user) {
-      toast.error("You must log in to confirm an agreement.");
-      return;
-    }
-
     setIsSubmitting(true);
 
     const agreementData = {
       userName: user.name,
       userEmail: user.email,
-      floorNo: selectedApartment.floorNo,
-      blockName: selectedApartment.blockName,
-      apartmentNo: selectedApartment.apartmentNo,
-      rent: selectedApartment.rent,
+      floorNo: apartment.floorNo,
+      blockName: apartment.blockName,
+      apartmentNo: apartment.apartmentNo,
+      rent: apartment.rent,
       status: "Pending",
     };
 
@@ -94,37 +76,52 @@ const Apartment = () => {
       .map(([key]) => key);
 
     if (missingFields.length > 0) {
-      toast.error(`Missing required fields: ${missingFields.join(", ")}`);
+      Swal.fire({
+        icon: 'error',
+        title: 'Missing Fields',
+        text: `Missing required fields: ${missingFields.join(", ")}`,
+      });
       setIsSubmitting(false);
       return;
     }
 
-    try {
-      const response = await fetch("http://localhost:5000/agreements", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(agreementData),
-      });
+    const confirmAgreement = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/agreements", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(agreementData),
+        });
 
-      if (response.ok) {
-        setAgreedApartments((prev) => ({
-          ...prev,
-          [selectedApartment.apartmentNo]: true,
-        }));
-        setShowAgreementModal(false);
-        toast.success("Agreement confirmed successfully!");
-      } else {
-        const errorData = await response.json();
-        toast.error(`Error: ${errorData.error}`);
+        if (response.ok) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Agreement confirmed successfully!',
+          });
+        } else {
+          const errorData = await response.json();
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "You can only apply for one agreement.",
+          });
+        }
+      } catch (error) {
+        console.error("Error confirming agreement:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to confirm agreement. Please try again.',
+        });
+      } finally {
+        setIsSubmitting(false);
       }
-    } catch (error) {
-      console.error("Error confirming agreement:", error);
-      toast.error("Failed to confirm agreement. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    };
+
+    confirmAgreement();
   };
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -185,14 +182,10 @@ const Apartment = () => {
               <p className="text-gray-600">Block Name: {apartment.blockName}</p>
               <p className="text-green-600 font-bold">Rent: ${apartment.rent}</p>
               <button
-                className={`mt-4 py-2 px-4 rounded-lg transition ${
-                  agreedApartments[apartment.apartmentNo]
-                    ? "bg-gray-400 text-white cursor-not-allowed"
-                    : "bg-blue-500 text-white hover:bg-blue-600"
-                }`}
+                className="mt-4 py-2 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
                 onClick={() => handleAgreementClick(apartment)}
               >
-                {agreedApartments[apartment.apartmentNo] ? "Agreement Locked" : "View Agreement"}
+                Apply for Agreement
               </button>
             </div>
           </div>
@@ -218,33 +211,6 @@ const Apartment = () => {
           Next
         </button>
       </div>
-
-      {showAgreementModal && selectedApartment && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg w-96">
-            <h2 className="text-xl font-semibold">Agreement for Apartment {selectedApartment.apartmentNo}</h2>
-            <p>Floor No: {selectedApartment.floorNo}</p>
-            <p>Block Name: {selectedApartment.blockName}</p>
-            <p>Rent: ${selectedApartment.rent}</p>
-            <p>Agreement status: Pending</p>
-            <button
-              onClick={confirmAgreement}
-              className={`mt-4 py-2 px-4 rounded-lg text-white ${
-                isSubmitting ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
-              }`}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "Submitting..." : "Confirm Agreement"}
-            </button>
-            <button
-              onClick={() => setShowAgreementModal(false)}
-              className="mt-4 bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
