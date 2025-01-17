@@ -11,6 +11,7 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../LayOut/Dashboard";
 import MyProfile from "../Pages/DashBoard/MyProfile";
 import Announcements from "../Pages/DashBoard/Announcements";
+import ManageMembers from "../Pages/DashBoard/ManageMembers";
 
 
 
@@ -42,12 +43,16 @@ import Announcements from "../Pages/DashBoard/Announcements";
         element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         children: [
           {
-            path: 'profile',
+            path: 'myProfile',
             element: <MyProfile></MyProfile>
           },
           {
             path:'announcements',
             element:<Announcements></Announcements>
+          },
+          {
+            path: 'manage-members',
+            element: <ManageMembers></ManageMembers>
           }
         ]
       }

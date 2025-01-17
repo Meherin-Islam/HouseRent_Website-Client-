@@ -5,7 +5,7 @@ import AuthContext from "../../provider/AuthContext";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
-// Import auth from firebaseConfig
+
 import { auth } from "../../firebase/firebase.config"; 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut } from "firebase/auth";
 
@@ -14,7 +14,7 @@ const Register = () => {
     const [errors, setErrors] = useState([]);
     const [showPassword, setShowPassword] = useState(false); 
     const [userName, setUserName] = useState(""); // State to hold the user's name
-    const [photoUrl, setPhotoUrl] = useState(""); // State to hold photo URL
+    const [photoUrl, setPhotoUrl] = useState(""); 
     const navigate = useNavigate(); 
 
     const handleRegister = async (e) => {
@@ -55,6 +55,25 @@ const Register = () => {
                     displayName: userName,
                     photoURL: photoUrl,
                 });
+
+                const userData = {
+                    email: user.email,
+                    name: userName,
+                   
+                };
+
+                const response = await fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData),
+                });
+
+                const data = await response.json();
+if (data.insertedId) {
+    console.log('user added to the database')
+}
 
                 // Sign out the current user
                 await signOut(auth);
