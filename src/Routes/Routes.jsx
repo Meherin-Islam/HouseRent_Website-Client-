@@ -8,6 +8,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import Apartment from "../Pages/Apartment/Apartment";
 import PrivateRoute from "./PrivateRoute";
+import Dashboard from "../LayOut/Dashboard";
 
 
 
@@ -36,7 +37,7 @@ import PrivateRoute from "./PrivateRoute";
       },
       {
         path: 'dashboard',
-        element: <PrivateRoute></PrivateRoute>,
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         children: [
           {
             path: 'userHome',
