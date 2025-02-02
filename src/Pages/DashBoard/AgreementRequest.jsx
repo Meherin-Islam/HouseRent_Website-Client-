@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2"; 
 
 const AgreementRequest = () => {
   const [agreements, setAgreements] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Fetch agreements from the server
+  
   const fetchAgreements = async () => {
     setLoading(true);
     setError("");
@@ -25,29 +26,42 @@ const AgreementRequest = () => {
     }
   };
 
-  // Handle accept or reject action
+  
+
   const handleAction = async (id, action) => {
     try {
-      const response = await axios.put(`http://localhost:5000/agreements/${id}`, { action });
-      if (response.data.success) {
-        setAgreements((prev) =>
-          prev.map((agreement) =>
-            agreement._id === id
-              ? { ...agreement, status: "checked" }
-              : agreement
-          )
-        );
-        alert(`Agreement ${action}ed successfully!`);
+      const response = await axios.patch(`http://localhost:5000/agreements/${id}`, { action });
+  
+     
+      if (response.data?.success) {
+       
+        setAgreements((prev) => prev.filter((agreement) => agreement._id !== id));
+  
+       
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: `Agreement ${action}ed successfully!`,
+        });
       } else {
-        alert("Failed to perform the action. Please try again.");
+        
+        throw new Error(response.data?.error || 'Unexpected response format');
       }
     } catch (err) {
       console.error(err.message);
-      alert("Error performing the action. Please try again.");
+  
+      
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: err.response?.data?.error || 'Something went wrong. Please try again.',
+      });
     }
   };
+  
 
-  // Fetch agreements on component mount
+
+  
   useEffect(() => {
     fetchAgreements();
   }, []);

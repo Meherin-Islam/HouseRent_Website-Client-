@@ -75,7 +75,7 @@ const ManageMembers = () => {
                                     <td className="border border-gray-300 px-4 py-2">{member.email}</td>
                                     <td className="border border-gray-300 px-4 py-2">
                                         <button
-                                            className="btn bg-red-600 text-white px-4 py-2 rounded hover:bg-red-600"
+                                            className="btn bg-red-600  text-white px-4 py-2 rounded hover:bg-red-600"
                                             onClick={() => handleRemove(member._id)}
                                         >
                                             Remove
