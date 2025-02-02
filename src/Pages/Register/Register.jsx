@@ -6,16 +6,16 @@ import SocialLogin from "../SocialLogin/SocialLogin";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 
-import { auth } from "../../firebase/firebase.config"; 
+import { auth } from "../../firebase/firebase.config";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut } from "firebase/auth";
 
 const Register = () => {
     const { createUser } = useContext(AuthContext);
     const [errors, setErrors] = useState([]);
-    const [showPassword, setShowPassword] = useState(false); 
+    const [showPassword, setShowPassword] = useState(false);
     const [userName, setUserName] = useState(""); // State to hold the user's name
-    const [photoUrl, setPhotoUrl] = useState(""); 
-    const navigate = useNavigate(); 
+    const [photoUrl, setPhotoUrl] = useState("");
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -59,10 +59,10 @@ const Register = () => {
                 const userData = {
                     email: user.email,
                     name: userName,
-                   
+
                 };
 
-                const response = await fetch('http://localhost:5000/users', {
+                const response = await fetch('https://build-board-server.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -71,9 +71,9 @@ const Register = () => {
                 });
 
                 const data = await response.json();
-if (data.insertedId) {
-    console.log('user added to the database')
-}
+                if (data.insertedId) {
+                    console.log('user added to the database')
+                }
 
                 // Sign out the current user
                 await signOut(auth);

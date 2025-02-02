@@ -14,7 +14,7 @@ const MakeAnnouncement = () => {
         };
 
         try {
-            const response = await fetch("http://localhost:5000/announcements", {
+            const response = await fetch("https://build-board-server.vercel.app/announcements", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

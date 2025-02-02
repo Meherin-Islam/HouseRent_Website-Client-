@@ -7,7 +7,7 @@ const Announcements = () => {
     useEffect(() => {
         const fetchAnnouncements = async () => {
             try {
-                const response = await fetch("http://localhost:5000/announcements");
+                const response = await fetch("https://build-board-server.vercel.app/announcements");
                 const data = await response.json();
                 setAnnouncements(data);
             } catch (error) {
@@ -54,7 +54,7 @@ const Announcements = () => {
                                                 if (confirm) {
                                                     try {
                                                         const response = await fetch(
-                                                            `http://localhost:5000/announcements/${announcement._id}`,
+                                                            `https://build-board-server.vercel.app/announcements/${announcement._id}`,
                                                             { method: "DELETE" }
                                                         );
                                                         if (response.ok) {

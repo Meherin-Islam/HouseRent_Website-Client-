@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 
 const AgreementRequest = () => {
   const [agreements, setAgreements] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  
+
   const fetchAgreements = async () => {
     setLoading(true);
     setError("");
     try {
-      const response = await axios.get("http://localhost:5000/agreements");
+      const response = await axios.get("https://build-board-server.vercel.app/agreements");
       if (Array.isArray(response.data)) {
         setAgreements(response.data);
       } else {
@@ -26,31 +26,31 @@ const AgreementRequest = () => {
     }
   };
 
-  
+
 
   const handleAction = async (id, action) => {
     try {
-      const response = await axios.patch(`http://localhost:5000/agreements/${id}`, { action });
-  
-     
+      const response = await axios.patch(`https://build-board-server.vercel.app/agreements/${id}`, { action });
+
+
       if (response.data?.success) {
-       
+
         setAgreements((prev) => prev.filter((agreement) => agreement._id !== id));
-  
-       
+
+
         Swal.fire({
           icon: 'success',
           title: 'Success!',
           text: `Agreement ${action}ed successfully!`,
         });
       } else {
-        
+
         throw new Error(response.data?.error || 'Unexpected response format');
       }
     } catch (err) {
       console.error(err.message);
-  
-      
+
+
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -58,10 +58,10 @@ const AgreementRequest = () => {
       });
     }
   };
-  
 
 
-  
+
+
   useEffect(() => {
     fetchAgreements();
   }, []);

@@ -4,11 +4,11 @@ import Swal from "sweetalert2";
 const ManageMembers = () => {
     const [members, setMembers] = useState([]);
 
-    
+
     useEffect(() => {
         const fetchMembers = async () => {
             try {
-                const response = await fetch("http://localhost:5000/users"); 
+                const response = await fetch("https://build-board-server.vercel.app/users");
                 if (!response.ok) {
                     throw new Error("Failed to fetch members");
                 }
@@ -21,7 +21,7 @@ const ManageMembers = () => {
         fetchMembers();
     }, []);
 
-   
+
     const handleRemove = async (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -34,7 +34,7 @@ const ManageMembers = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await fetch(`http://localhost:5000/users/${id}`, {
+                    const response = await fetch(`https://build-board-server.vercel.app/users/${id}`, {
                         method: "DELETE",
                     });
 

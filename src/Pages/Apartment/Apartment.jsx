@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Swal from 'sweetalert2'; 
+import Swal from 'sweetalert2';
 
 const Apartment = () => {
   const [user, setUser] = useState(null);
@@ -28,7 +28,7 @@ const Apartment = () => {
   useEffect(() => {
     const fetchApartments = async () => {
       try {
-        const response = await fetch("http://localhost:5000/apartments");
+        const response = await fetch("https://build-board-server.vercel.app/apartments");
         const data = await response.json();
         setApartments(data);
         setFilteredApartments(data);
@@ -87,7 +87,7 @@ const Apartment = () => {
 
     const confirmAgreement = async () => {
       try {
-        const response = await fetch("http://localhost:5000/agreements", {
+        const response = await fetch("https://build-board-server.vercel.app/agreements", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
