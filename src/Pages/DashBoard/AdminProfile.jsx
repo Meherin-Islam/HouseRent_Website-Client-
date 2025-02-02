@@ -31,7 +31,7 @@ const AdminProfile = () => {
             const res = await axiosSecure.get(`/users/admin/${user.email}`);
             return res.data;
         },
-        enabled: !!user, 
+        enabled: !!user,
     });
 
     if (!user) {
@@ -46,16 +46,16 @@ const AdminProfile = () => {
         <div className="p-6 bg-pink-200 p-10 shadow-md rounded-lg">
             <div className="text-center">
                 <p className="font-bold text-red-800 text-3xl mb-6">Welcome To Your Profile</p>
-                <img 
-                    src={user.image} 
-                    alt="Admin" 
-                    className="w-24 h-24 mx-auto rounded-full" 
+                <img
+                    src={user.image}
+                    alt="Admin"
+                    className="w-24 h-24 mx-auto rounded-full"
                 />
                 <h2 className="text-2xl text-red-700 font-bold mt-4">{user.name}</h2>
                 <p className="text-gray-700">{user.email}</p>
             </div>
             <div className="mt-6 space-y-2">
-               
+
                 <p className="text-xl"><strong>Total Users:</strong> {adminData?.totalUsers}</p>
                 <p className="text-xl"><strong>Total Members:</strong> {adminData?.totalMembers}</p>
             </div>

@@ -2,13 +2,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:5000", 
+  baseURL: "https://build-board-server.vercel.app",
 });
 
 const useAxiosSecure = () => {
   const navigate = useNavigate();
 
-  // Response interceptor to handle 401 and 403 errors
+  
   axiosSecure.interceptors.response.use(
     (response) => response,
     (error) => {
