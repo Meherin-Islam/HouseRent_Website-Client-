@@ -18,7 +18,7 @@ const MyProfile = () => {
       }
     });
 
-    return () => unsubscribe(); // Cleanup the listener on unmount
+    return () => unsubscribe(); 
   }, []);
 
   if (!user) {
@@ -31,7 +31,7 @@ const MyProfile = () => {
 
   return (
     <div className="p-6 bg-white shadow rounded-lg max-w-2xl mx-auto">
-      {/* Profile Image */}
+     
       <div className="flex items-center mb-6">
         <img
           src={user.image}
@@ -44,7 +44,7 @@ const MyProfile = () => {
         </div>
       </div>
 
-      {/* Additional Info */}
+     
       <div className="mt-4">
         <h3 className="text-lg font-semibold mb-2">Agreement Info</h3>
         <div className="space-y-2 text-gray-800">

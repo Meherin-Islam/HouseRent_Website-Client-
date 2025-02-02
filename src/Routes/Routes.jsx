@@ -14,6 +14,7 @@ import Announcements from "../Pages/DashBoard/Announcements";
 import ManageMembers from "../Pages/DashBoard/ManageMembers";
 import MakeAnnouncement from "../Pages/DashBoard/MakeAnnouncement";
 import AgreementRequest from "../Pages/DashBoard/AgreementRequest";
+import AdminProfile from "../Pages/DashBoard/AdminProfile";
 
 
 
@@ -53,6 +54,10 @@ import AgreementRequest from "../Pages/DashBoard/AgreementRequest";
             element:<Announcements></Announcements>
           },
           //admin routes
+          {
+            path: 'profile',
+            element: <AdminProfile></AdminProfile>
+          },
           {
             path: 'manage-members',
             element: <ManageMembers></ManageMembers>

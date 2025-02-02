@@ -12,7 +12,7 @@ const Dashboard = () => {
     
     return (
         <div className="flex">
-            {/* dashboard side bar */}
+           
             <div className="w-64 min-h-screen bg-lime-300">
             <h2 className="text-3xl font-bold mb-6 text-center mt-4">Dashboard</h2>
                 <ul className="menu p-4 text-xl font-bold">
@@ -74,7 +74,7 @@ const Dashboard = () => {
                     </li>
                 </ul>
             </div>
-            {/* dashboard content */}
+           
             <div className="flex-1 p-8">
                 <Outlet></Outlet>
             </div>

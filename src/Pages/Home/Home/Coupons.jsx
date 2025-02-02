@@ -7,7 +7,7 @@ const coupons = [
     discount: "10% OFF",
     description: "Discount on monthly rent for first-time tenants",
     code: "RENT10",
-    expiry: "Valid until 31st Jan 2025",
+    expiry: "Valid until 19th Feb 2025",
   },
   {
     id: 2,
@@ -52,7 +52,7 @@ const Coupons = () => {
             <p className="text-teal-700 mb-4">{coupon.description}</p>
             <p className="text-gray-500 text-sm mb-6">{coupon.expiry}</p>
             <div className="flex items-center justify-between">
-              <span className="bg-teal-100 text-teal-800 px-4 py-2 rounded-full font-mono text-sm">
+              <span className="bg-teal-100 text-teal-800 font-bold px-4 py-2 rounded-full font-mono text-sm">
                 {coupon.code}
               </span>
               <button

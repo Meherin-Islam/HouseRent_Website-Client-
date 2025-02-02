@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 const ManageMembers = () => {
     const [members, setMembers] = useState([]);
 
-    // Fetch members from the server
+    
     useEffect(() => {
         const fetchMembers = async () => {
             try {
@@ -21,7 +21,7 @@ const ManageMembers = () => {
         fetchMembers();
     }, []);
 
-    // Handle member removal
+   
     const handleRemove = async (id) => {
         Swal.fire({
             title: "Are you sure?",
